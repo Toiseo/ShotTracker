@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Inter:opsz,wght@14..32,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Yanone+Kaffeesatz:wght@200..700&display=swap');
+body {
+    background-color: #f0f0f0;
+    font-family: "Inter";
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+.misc-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 80px;
+}
+.misc-img {
+    width: 50%;
+    height: 50%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.acceptText{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    display: none;
+}
+
+.acceptButton{
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+    display: none;
+}
+.scoreImage{
+    width: 200%;
+    height: 200%;
+}
+
+h3{
+    color: rgb(53, 53, 53);
+    font-size: 1em;
+}
+
+.rejectButton{
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-top: 0px;
+    cursor: pointer;
+    display: none;
+}
+
+.slidecontainer{
+    display: flex;
+    flex-direction: row;
+}
+h2{
+    color: rgb(53, 53, 53);
+}
+h1 {
+    color: #333;
+    text-align: center;
+    font-size: 3em;
+    font-family: "Bungee Shade", sans-serif;
+}
+p {
+    color: #555;
+    line-height: 1.6;
+}
+button {
+    background-color: #1e5aff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+}   
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+.poäng-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center; 
+    align-items: center;
+    margin-right: 80px;
+    margin-left: 80px;
+    flex: 1;
+}
+.tavlan {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

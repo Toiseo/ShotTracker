@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Target</title>
+    <script src="static/socket.io.min.js"></script>
+    <script src="/static/index.js" defer></script>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div>
+        <img class="status-icon" id="statusConnected" style="display: none" src="/static/connected.svg">
+        <img class="status-icon" id="statusDisconnected" src="/static/disconnected.svg">
+    </div>
+
+
+
+        <div class="misc-container">
+        <h1>Shot Images</h1>    
+            <img alt="Reference Image" id="targetImage" class="misc-img">
+            <img alt="Diff Image" id="diffImage" class="misc-img" src="/static/diff_default.png">
+        </div>
+        <div id="player1" class="poäng-container">
+            <h2 id="player1Name">Alfred</h2>
+            <h3 id="totalScoreP1">Total: 0</h3>
+        </div>
+        <div class="tavlan">
+            <h1>Tavlan</h1>
+            
+            <img alt="Score Image" id="scoreImage" class="scoreImage" src="static/Target.png">
+
+            <div class="buttons">
+                <button id="addPointButton">Add Point</button>
+                <button id="clearPointsButton">Clear Points</button>
+                <button id="captureRefButton">Capture Reference Image</button>
+                <button id="switchTurnButton">Switch Turns</button>
+                <button id="restartServerButton">Restart Server</button>
+                <div class="slidecontainer">
+                <p>Focus: </p>
+                <input type="range" min="0" max="255" step="5" value="0" class="slider" id="focusSlider">
+                </div>
+                <div id="dialogContainer">
+                    <p id="acceptText" class="acceptText">Accept shot? </p>
+                    <button id="acceptShotButton" class="acceptButton">Yes</button>
+                    <button id="rejectShotButton" class="rejectButton">No</button>
+                </div>
+            </div>
+        </div>
+        <div id="player2" class="poäng-container">
+            <h2 id="player2Name">Pappa</h2>
+            <h3 id="totalScoreP2">Total: 0</h3>
+        </div>
+
+
+</body>
+</html>
