@@ -3,30 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Target</title>
+    <title>Shot Tracker</title>
     <script src="static/socket.io.min.js"></script>
     <script src="/static/index.js" defer></script>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
+    <!--
     <div>
         <img class="status-icon" id="statusConnected" style="display: none" src="/static/connected.svg">
         <img class="status-icon" id="statusDisconnected" src="/static/disconnected.svg">
-    </div>
+    </div>-->
+        <button class="huggLeftSide" id="openCameraSettingsButton">Open Camera Settings</button>
 
+        <div class="cameraSettings">
+            <h2>Camera Settings</h2>
 
+            <div class="cameraSetting">
+                <label for="autoFocus">Auto Focus: </label>
+                <input type="checkbox" class="checkbox" id="autoFocus" name="autoFocus" checked="checked">            
+            </div>
+            <div class="cameraSetting">
+                <label for="focusSlider">Focus: </label>
+                <input type="range" min="0" max="255" step="1" value="0" class="slider" id="focusSlider" name="focusSlider">            
+            </div>
+
+            <div class="cameraSetting">
+                <label for="autoExposure">Auto Exposure: </label>
+                <input type="checkbox" class="checkbox" id="autoExposure" name="autoExposure" checked="checked">            
+            </div>
+            <div class="exposureSettings" id="exposureSettings">
+                <div class="cameraSetting exposureRange">
+                <label for="exposureRange">Exposure Range: </label>
+                <select id="exposureRange"  name="exposureRange">
+                    <option value="Windows" selected>Windows (DirectShow/MSMF)</option>
+                    <option value="Linux">Linux (V4L2)</option>
+                    <option value="Custom">Custom Range</option>
+                </select>
+                </div>
+                <div class="customExposureContainer" id="customExposureContainer">                    
+                    <h3>Custom Exposure Range</h3>
+                    <div class="cameraSetting">
+                        <label class="rangeText" for="minExposureRange">Min: </label>
+                        <input type="text" class="rangeInput" id="minExposureRange" name="minExposureRange">
+                        <label class="rangeText" for="maxExposureRange">Max: </label>
+                        <input type="text" class="rangeInput" id="maxExposureRange" name="maxExposureRange">
+                    </div>
+                </div>
+                
+                <div class="cameraSetting">
+                    <label for="exposureSlider">Exposure: </label>
+                    <input type="range" min="0" max="255" step="1" value="0" class="slider" id="exposureSlider" name="exposureSlider">
+                    <p class="exposureValueText" id="exposureValueText">0</p>
+                </div>
+            </div>
+
+            
+
+            <button id="applyCameraSettings">Apply Settings</button>
+            <button id="closeCameraSettingsButton">Close Settings</button>
+        </div>
 
         <div class="misc-container">
-        <h1>Shot Images</h1>    
+        <h1>Shot Images</h1>
             <img alt="Reference Image" id="targetImage" class="misc-img">
             <img alt="Diff Image" id="diffImage" class="misc-img" src="/static/diff_default.png">
         </div>
-        <div id="player1" class="poäng-container">
-            <h2 id="player1Name">Alfred</h2>
-            <h3 id="totalScoreP1">Total: 0</h3>
-        </div>
         <div class="tavlan">
-            <h1>Tavlan</h1>
+            <h1>Shot Tracker</h1>
             
             <img alt="Score Image" id="scoreImage" class="scoreImage" src="static/Target.png">
 
@@ -36,10 +80,7 @@
                 <button id="captureRefButton">Capture Reference Image</button>
                 <button id="switchTurnButton">Switch Turns</button>
                 <button id="restartServerButton">Restart Server</button>
-                <div class="slidecontainer">
-                <p>Focus: </p>
-                <input type="range" min="0" max="255" step="5" value="0" class="slider" id="focusSlider">
-                </div>
+                
                 <div id="dialogContainer">
                     <p id="acceptText" class="acceptText">Accept shot? </p>
                     <button id="acceptShotButton" class="acceptButton">Yes</button>
@@ -47,9 +88,10 @@
                 </div>
             </div>
         </div>
-        <div id="player2" class="poäng-container">
-            <h2 id="player2Name">Pappa</h2>
-            <h3 id="totalScoreP2">Total: 0</h3>
+        <div id="player" class="poäng-container">
+            <h1>Player</h1>
+            <h2 id="playerName">Player1</h2>
+            <h3 id="totalScore">Total: 0</h3>
         </div>
 
 

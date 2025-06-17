@@ -169,7 +169,6 @@ def check_camera(detector):
                 state.should_recapture_ref_img = False
                 socketio.emit('refImage', encode_im(im))
                 return
-            # ... do image processing here
         else:
             console_error('Failed to capture image from camera')
 
@@ -180,7 +179,7 @@ def camera_task():
     cam.set(cv2.CAP_PROP_AUTOFOCUS, 0)
     cam.set(cv2.CAP_PROP_FOCUS, 0)
     cam.set(cv2.CAP_PROP_CONTRAST , 25)
-    #cam.set(cv2.CAP_PROP_AUTO_EXPOSURE, 0)
+    cam.set(cv2.CAP_PROP_AUTO_EXPOSURE, 1)
     
     with state_lock:
         state.cam = cam
@@ -228,7 +227,27 @@ def handle_message():
     with state_lock:
         state.should_recapture_ref_img = True
         console_log('Set should recapture reference image to True')
+
+@socketio.on('updateCameraSettings')
+def handle_update_camera_settings(data):
+    with state_lock:
+        if 'focus' in data:
+            if int(data['autoFocus']) == 0:
+                state.cam.set(cv2.CAP_PROP_FOCUS, float(data['focus']))
+        if 'autoFocus' in data:
+            # get the current auto focus setting from cv2
+            # and set it to the value from the data
+            pass
+            #state.cam.set(cv2.CAP_PROP_AUTOFOCUS, int(data['autoFocus']))
+        if 'exposure' in data:
+            if int(data['autoExposure']) == 0:
+                state.cam.set(cv2.CAP_PROP_AUTOFOCUS, 0)
+                state.cam.set(cv2.CAP_PROP_EXPOSURE, -13)                
+        if 'autoExposure' in data:
+            state.cam.set(cv2.CAP_PROP_AUTO_EXPOSURE, int(data['autoExposure']))
+        console_log('Camera settings updated')    
     
+
 @socketio.on('acceptShot')
 def handle_accept_shot():
     with state_lock:

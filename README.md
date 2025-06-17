@@ -1,5 +1,8 @@
 # 🎯 ShotTracker
 
+**WORK IN PROGRESS** This is currently not a plug-and-play solution. The code is still being developed and tested.
+
+
 **ShotTracker** is a Python server application for tracking air gun shots on a target using a USB webcam and printed markers.  
 Tested on **Raspberry Pi 5** with a Logitech USB webcam.
 
@@ -31,7 +34,7 @@ Open a terminal and run:
 ```bash
 sudo apt-get update
 sudo apt-get install python3 python3-pip
-pip3 install opencv-python flask numpy
+pip3 install opencv-python flask numpy flask_socketio gevent
 ```
 
 #### b. Clone the Repository
@@ -71,16 +74,16 @@ Replace `<raspberry_pi_ip>` with the IP address you found earlier.
 ## 🏹 Usage Instructions
 
 1. **Set Up the Target:**  
-   Place the target with attached markers in the camera's view. Ensure all markers are clearly visible.
+   Place the target with attached markers in the camera's view. Ensure all markers are clearly visible. I recommend placing the camera below the target since that is how it has been tested.
 
 2. **Adjust Camera:**  
-   Use the web interface's focus slider to get a sharp image of the target.
+   If your camera does not properly correct the perspective in the web view, try adjusting the camera angle and the camera settings like focus, auto-focus, and exposure for better results.
 
 3. **Capture Reference Image:**  
-   Click **"Capture Reference Image"** in the web UI. This sets the baseline for shot detection.
+   Click **"Capture Reference Image"** in the web UI. This sets the baseline for shot detection. If you are using this in an environment with changing light conditions I recommend that you capture a new reference image before each shot and discard any false positives that may occur due to changing light conditions. See "Review & Save" for more details.
 
 4. **Take a Shot:**  
-   Fire at the target. After each shot, click **"Capture"** to detect and display the shot location.
+   Fire at the target. After each shot, click **"Capture Reference Image"** to detect and display the shot location.
 
 5. **Review & Save:**  
    Accept or discard the detected shot. Accepted shots are saved and shown in the interface.
