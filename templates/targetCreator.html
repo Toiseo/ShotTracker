@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shot Tracker - Target Creator</title>
+    <script src="static/socket.io.min.js"></script>
+    <script src="/static/targetCreator.js" defer></script>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="tavlan">
+        <h1>Target Creator</h1>
+        <img src="static/Target.png" alt="Target Image" id="createdTargetImage" class="score-image">
+        <div class="targetCreatorControls">
+            <button id="captureRefButton">Capture Reference Image</button>
+            <button id="drawContours">Auto Find Contours</button>
+        </div>
+    </div>    
+</body>
+</html>

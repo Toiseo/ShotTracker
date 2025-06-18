@@ -9,12 +9,16 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <!--
+    
     <div>
         <img class="status-icon" id="statusConnected" style="display: none" src="/static/connected.svg">
         <img class="status-icon" id="statusDisconnected" src="/static/disconnected.svg">
-    </div>-->
-        <button class="huggLeftSide" id="openCameraSettingsButton">Open Camera Settings</button>
+    </div>
+        <div class="huggLeftContainer">
+            <button class="huggLeftSide" id="openCameraSettingsButton">Open Camera Settings</button>
+            <button class="huggLeftSide" id="openTargetCreatorButton" onclick="window.location.href='target-creator'">Open Target Creator</button>
+        </div>
+
 
         <div class="cameraSettings">
             <h2>Camera Settings</h2>

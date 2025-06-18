@@ -138,6 +138,10 @@ function updateExposureSliderRange() {
     document.getElementById("exposureValueText").textContent = exposureSlider.value;
 }
 
+function requestCameraSettings() {
+    socket.emit('requestCameraSettings');
+}
+
 function updateCameraSettings() {
     socket.emit('updateCameraSettings', {
         focus: Number(focusSlider.value),
@@ -227,6 +231,8 @@ restartServerButton.addEventListener("click", function() {
 const statusConnectedEl = document.getElementById("statusConnected");
 const statusDisconnectedEl = document.getElementById("statusDisconnected");
 var socket = io();
+
+requestCameraSettings();
 socket.on('connect', function() {
     statusConnectedEl.style.display = "block";
     statusDisconnectedEl.style.display = "none";
@@ -248,6 +254,19 @@ socket.on('refImage', function(data) {
 socket.on('diffImage', function(data) {
     displayImage(diffImage, data);
 });
+socket.on('cameraSettings', function(data) {
+    focusSlider.value = data.focus;
+    document.getElementById("autoFocus").checked = data.autoFocus;
+    exposureSlider.value = data.exposure;
+    document.getElementById("autoExposure").checked = data.autoExposure;
+    if (data.autoExposure) {
+        exposureSettingsContainer.style.display = "none";
+        customExposureContainer.style.display = "none";
+    } else {
+        exposureSettingsContainer.style.display = "flex";
+    }
+});
+
 socket.on('shotDetected', function(data) {
     let score = data;
     add_point(score);

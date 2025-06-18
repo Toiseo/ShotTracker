@@ -5,7 +5,10 @@ from io import BytesIO
 from flask_socketio import SocketIO, send, emit
 from dataclasses import dataclass
 import numpy as np
+
+
 import point_counter
+import TargetCreator
 
 import threading
 import os
@@ -20,7 +23,19 @@ CORRECTED_SIZE = (640, 640)
 
 
 app = Flask(__name__, static_url_path='/static', static_folder='static')
-socketio = SocketIO(app, async_mode='gevent')
+socketio = SocketIO(
+    app,
+    async_mode='gevent',
+    cors_allowed_origins="*",
+    max_http_buffer_size=100000000  # 100MB, adjust as needed
+)
+
+@dataclass
+class camSettings:
+    autoExposure: bool = True
+    exposure: int = 0
+    autoFocus: bool = True
+    focus: int = 0
 
 @dataclass
 class State:
@@ -30,6 +45,7 @@ class State:
     last_target_img = None
     should_recapture_ref_img = False
     contours = None
+    cameraSettings = camSettings()
     def __init__(self):
         self.contours = point_counter.compute_contours()
 
@@ -142,7 +158,7 @@ def check_camera(detector):
             arucoMarkers = detect_and_assign_aruco_markers(detector, im)
             completeAruco = len(arucoMarkers) == 4
             if not completeAruco:
-                console_error('aruco error')            
+                pass           
             else:
                 im = correct_perspective(im, arucoMarkers)
             if state.ref_img is None or state.should_recapture_ref_img:
@@ -211,6 +227,11 @@ def camera_task():
 def index():
     return render_template('index.html')
 
+
+@app.route('/target-creator')
+def target_creator():
+    return render_template('targetCreator.html')
+
 @socketio.on('requestRefImage')
 def handle_request_ref_image():
     with state_lock:
@@ -227,20 +248,43 @@ def handle_message():
     with state_lock:
         state.should_recapture_ref_img = True
         console_log('Set should recapture reference image to True')
+        
+@socketio.on('drawContours')
+def handle_draw_contours():
+    with state_lock:
+        new_img = TargetCreator.draw_contours(state.ref_img)
+        socketio.emit('updateCreatedTarget', encode_im(new_img) if new_img is not None else None)
 
 @socketio.on('updateCameraSettings')
 def handle_update_camera_settings(data):
     with state_lock:
         if 'focus' in data:
             if int(data['autoFocus']) == 0:
-                state.cam.set(cv2.CAP_PROP_FOCUS, float(data['focus']))
+                state.cameraSettings.focus = int(data['focus'])
         if 'autoFocus' in data:
-            state.cam.set(cv2.CAP_PROP_AUTOFOCUS, int(data['autoFocus']))
+            state.cameraSettings.autoFocus = int(data['autoFocus']) == 1
         if 'autoExposure' in data:
-            state.cam.set(cv2.CAP_PROP_AUTO_EXPOSURE, int(data['autoExposure']))
             if int(data['autoExposure']) == 0 and 'exposure' in data:
-                state.cam.set(cv2.CAP_PROP_EXPOSURE, float(data['exposure']))
-        console_log('Camera settings updated')
+                state.cameraSettings.autoExposure = False
+                state.cameraSettings.exposure = int(data['exposure'])
+            else:
+                state.cameraSettings.autoExposure = True
+        
+            state.cam.set(cv2.CAP_PROP_FOCUS, state.cameraSettings.focus)
+            state.cam.set(cv2.CAP_PROP_AUTOFOCUS, 1 if state.cameraSettings.autoFocus else 0)
+            state.cam.set(cv2.CAP_PROP_AUTO_EXPOSURE, 1 if state.cameraSettings.autoExposure else 0)
+            state.cam.set(cv2.CAP_PROP_EXPOSURE, state.cameraSettings.exposure)
+                
+@socketio.on('requestCameraSettings')
+def handle_request_camera_settings():
+    with state_lock:
+        settings = {
+            'autoExposure': state.cameraSettings.autoExposure,
+            'exposure': state.cameraSettings.exposure,
+            'autoFocus': state.cameraSettings.autoFocus,
+            'focus': state.cameraSettings.focus
+        }
+        socketio.emit('cameraSettings', settings)
     
 
 @socketio.on('acceptShot')
