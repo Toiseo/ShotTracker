@@ -235,17 +235,12 @@ def handle_update_camera_settings(data):
             if int(data['autoFocus']) == 0:
                 state.cam.set(cv2.CAP_PROP_FOCUS, float(data['focus']))
         if 'autoFocus' in data:
-            # get the current auto focus setting from cv2
-            # and set it to the value from the data
-            pass
-            #state.cam.set(cv2.CAP_PROP_AUTOFOCUS, int(data['autoFocus']))
-        if 'exposure' in data:
-            if int(data['autoExposure']) == 0:
-                state.cam.set(cv2.CAP_PROP_AUTOFOCUS, 0)
-                state.cam.set(cv2.CAP_PROP_EXPOSURE, -13)                
+            state.cam.set(cv2.CAP_PROP_AUTOFOCUS, int(data['autoFocus']))
         if 'autoExposure' in data:
             state.cam.set(cv2.CAP_PROP_AUTO_EXPOSURE, int(data['autoExposure']))
-        console_log('Camera settings updated')    
+            if int(data['autoExposure']) == 0 and 'exposure' in data:
+                state.cam.set(cv2.CAP_PROP_EXPOSURE, float(data['exposure']))
+        console_log('Camera settings updated')
     
 
 @socketio.on('acceptShot')

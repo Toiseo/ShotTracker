@@ -77,7 +77,12 @@ document.getElementById("autoExposure").addEventListener("change", function() {
     }
     else {
         exposureSettingsContainer.style.display = "flex";
-        customExposureContainer.style.display = "none";
+        if (exposureRangeSelector.value === "Custom") {
+            customExposureContainer.style.display = "flex";
+            updateExposureSliderRange();
+        } else {
+            customExposureContainer.style.display = "none";
+        }
     }
 });
 
