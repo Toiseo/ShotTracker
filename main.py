@@ -191,7 +191,7 @@ def camera_task():
     parameters.adaptiveThreshWinSizeMax = 23
     parameters.adaptiveThreshWinSizeStep = 10
     parameters.cornerRefinementMethod = cv2.aruco.CORNER_REFINE_SUBPIX
-    parameters.perspectiveRemoveIgnoredMarginPerCell = 0.05  # try 0.05–0.2
+    parameters.perspectiveRemoveIgnoredMarginPerCell = 0.05
     parameters.minMarkerPerimeterRate = 0.03
     parameters.maxMarkerPerimeterRate = 4.0 
     detector = cv2.aruco.ArucoDetector(aruco_dict, parameters)   
