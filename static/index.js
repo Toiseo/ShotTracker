@@ -280,13 +280,4 @@ socket.on('scoreImage', function(data) {
     displayImage(scoreImage, data);   
 });
 
-
-function displayImage(imgEl, arrayBuf) {
-    const arrayBufferView = new Uint8Array(arrayBuf);
-    const blob = new Blob([arrayBufferView], { type: "image/jpeg" });
-    const urlCreator = window.URL || window.webkitURL;
-    const imageUrl = urlCreator.createObjectURL(blob);
-    imgEl.src = imageUrl;
-}
-
 renderCurrentPlayer();

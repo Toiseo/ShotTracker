@@ -6,11 +6,17 @@
 **ShotTracker** is a Python server application for tracking air gun shots on a target using a USB webcam and printed markers.  
 Tested on **Raspberry Pi 5** with a Logitech USB webcam.
 
-### 1. Hardware Setup
+### You need:
+- A Raspberry Pi 5 with a USB webcam or Raspberry Pi Camera Module, tested with 4 gb RAM.
+- Access to a printer to print the target markers.
+- A web browser to access the user interface.
 
+### 1. Hardware Setup
+- **Raspberry Pi 5:** Simply earn enough shells to buy one. 
+  **Note:** The app is not tested on Raspberry Pi 4 or earlier models, but it may work. Give it a shot.
 - **Camera:** USB webcam or Raspberry Pi Camera Module (tested with Logitech models)
 - **Target:** Print the complete target image in the `markers` folder. Or follow the instructions in the same folder to create a custom target.
-  **Important:** Markers must be fully visible to the camera and oriented as shown in the example setup image.
+  **Important:** Markers must be fully visible to the camera and oriented as shown in the example setup image. See the readne in the `markers` for more details.
 
 ### 2. Software Installation (Raspberry Pi 5)
 
