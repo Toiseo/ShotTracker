@@ -13,7 +13,7 @@ Tested on **Raspberry Pi 5** with a Logitech USB webcam.
 
 ### 1. Hardware Setup
 - **Raspberry Pi 5 (Or any other computer):** Simply earn enough shells to buy one. 
-  **Note:** A raspberry pi is not required! It is simply a great way to keep the setup protable and good for hosting small servers like this. The app is not tested on Raspberry Pi 4 or earlier models, but it may work. Give it a shot.
+- **Note:** A raspberry pi is not required! It is simply a great way to keep the setup protable and good for hosting small servers like this. The app is not tested on Raspberry Pi 4 or earlier models, but it may work. Give it a shot.
 - **Camera:** USB webcam or Raspberry Pi Camera Module (tested with Logitech webcam)
 - **Target:** Print the complete target image in the `markers` folder. Or follow the instructions in the same folder to create a custom target.
   **Important:** Markers must be fully visible to the camera and oriented as shown in the example setup image. See the readne `markers` for more details.

@@ -23,12 +23,7 @@ CORRECTED_SIZE = (640, 640)
 
 
 app = Flask(__name__, static_url_path='/static', static_folder='static')
-socketio = SocketIO(
-    app,
-    async_mode='gevent',
-    cors_allowed_origins="*",
-    max_http_buffer_size=100000000  # 100MB, adjust as needed
-)
+socketio = SocketIO(app, async_mode='gevent')
 
 @dataclass
 class camSettings:
